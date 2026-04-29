@@ -1,6 +1,6 @@
 # nvoip-go
 
-Cliente Go simples para a API v2 da Nvoip, com foco nos fluxos principais de autenticação, ligações, OTP e WhatsApp.
+SDK e exemplos oficiais da [Nvoip](https://www.nvoip.com.br/) para integrar a API v2 com OAuth, chamadas, OTP, WhatsApp, SMS e saldo em Go.
 
 ## Requisitos
 
