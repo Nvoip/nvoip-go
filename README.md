@@ -8,6 +8,12 @@ SDK e exemplos oficiais da [Nvoip](https://www.nvoip.com.br/) para integrar a AP
 
 - Go 1.21+
 
+## Instalacao
+
+```bash
+go get github.com/Nvoip/nvoip-go@v0.1.0
+```
+
 ## Configuração
 
 ```bash
