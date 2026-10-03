@@ -36,7 +36,7 @@ func NewClient(baseURL, oauthClientID, oauthClientSecret string) *Client {
 }
 
 func EncodeBasicAuth(clientID, clientSecret string) string {
-	return base64.StdEncoding.EncodeToString([]byte(clientID + ":" + clientSecret))
+	return base64.StdEncoding.EncodeToString([]byte(url.QueryEscape(clientID) + ":" + url.QueryEscape(clientSecret)))
 }
 
 func (c *Client) CreateClientCredentialsToken(ctx context.Context) (map[string]any, error) {
