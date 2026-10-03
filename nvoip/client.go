@@ -95,8 +95,8 @@ func (c *Client) SendOTP(ctx context.Context, accessToken string, payload map[st
 	return c.jsonRequest(ctx, http.MethodPost, "/otp", payload, accessToken)
 }
 
-func (c *Client) CheckOTP(ctx context.Context, code, key string) (map[string]any, error) {
-	return c.request(ctx, http.MethodGet, "/check/otp?code="+url.QueryEscape(code)+"&key="+url.QueryEscape(key), nil, nil)
+func (c *Client) CheckOTP(ctx context.Context, bearer, code, key string) (map[string]any, error) {
+	return c.request(ctx, http.MethodGet, "/check/otp?code="+url.QueryEscape(code)+"&key="+url.QueryEscape(key), map[string]string{"Authorization": "Bearer " + bearer}, nil)
 }
 
 func (c *Client) ListWhatsAppTemplates(ctx context.Context, accessToken string) (map[string]any, error) {
