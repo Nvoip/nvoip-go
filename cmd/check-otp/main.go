@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 
-	"github.com/Nvoip/nvoip-go/internal/exampleutil"
+	"github.com/Nvoip/nvoip-go/v3/internal/exampleutil"
 )
 
 func main() {
 	client := exampleutil.NewClientFromEnv()
 	exampleutil.PrintJSON(client.CheckOTP(
 		context.Background(),
+		exampleutil.AccessTokenOrCreate(context.Background(), client),
 		exampleutil.MustEnv("NVOIP_OTP_CODE"),
 		exampleutil.MustEnv("NVOIP_OTP_KEY"),
 	))

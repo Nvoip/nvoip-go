@@ -3,14 +3,10 @@ package main
 import (
 	"context"
 
-	"github.com/Nvoip/nvoip-go/internal/exampleutil"
+	"github.com/Nvoip/nvoip-go/v3/internal/exampleutil"
 )
 
 func main() {
 	client := exampleutil.NewClientFromEnv()
-	exampleutil.PrintJSON(client.CreateAccessToken(
-		context.Background(),
-		exampleutil.MustEnv("NVOIP_NUMBERSIP"),
-		exampleutil.MustEnv("NVOIP_USER_TOKEN"),
-	))
+	exampleutil.PrintJSON(client.CreateClientCredentialsToken(context.Background()))
 }
