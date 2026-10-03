@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/Nvoip/nvoip-go/internal/exampleutil"
+	"github.com/Nvoip/nvoip-go/v3/internal/exampleutil"
 )
 
 func main() {

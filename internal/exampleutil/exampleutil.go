@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Nvoip/nvoip-go/nvoip"
+	"github.com/Nvoip/nvoip-go/v3/nvoip"
 )
 
 func MustEnv(name string) string {
