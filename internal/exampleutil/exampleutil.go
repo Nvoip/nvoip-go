@@ -31,7 +31,7 @@ func AccessTokenOrCreate(ctx context.Context, client *nvoip.Client) string {
 		return accessToken
 	}
 
-	payload, err := client.CreateAccessToken(ctx, MustEnv("NVOIP_NUMBERSIP"), MustEnv("NVOIP_USER_TOKEN"))
+	payload, err := client.CreateClientCredentialsToken(ctx)
 	if err != nil {
 		panic(err)
 	}

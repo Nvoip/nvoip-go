@@ -22,7 +22,7 @@ type Client struct {
 
 func NewClient(baseURL, oauthClientID, oauthClientSecret string) *Client {
 	if baseURL == "" {
-		baseURL = "https://api.nvoip.com.br/v2"
+		baseURL = "https://api.nvoip.com.br/v3"
 	}
 
 	return &Client{
@@ -39,18 +39,16 @@ func EncodeBasicAuth(clientID, clientSecret string) string {
 	return base64.StdEncoding.EncodeToString([]byte(clientID + ":" + clientSecret))
 }
 
-func (c *Client) CreateAccessToken(ctx context.Context, numbersip, userToken string) (map[string]any, error) {
+func (c *Client) CreateClientCredentialsToken(ctx context.Context) (map[string]any, error) {
 	basicAuth, err := c.resolveBasicAuth()
 	if err != nil {
 		return nil, err
 	}
 
 	values := url.Values{}
-	values.Set("username", numbersip)
-	values.Set("password", userToken)
-	values.Set("grant_type", "password")
+	values.Set("grant_type", "client_credentials")
 
-	return c.request(ctx, http.MethodPost, "/oauth/token", map[string]string{
+	return c.request(ctx, http.MethodPost, "https://api.nvoip.com.br/auth/oauth2/token", map[string]string{
 		"Authorization": "Basic " + basicAuth,
 		"Content-Type":  "application/x-www-form-urlencoded",
 	}, strings.NewReader(values.Encode()))
@@ -66,7 +64,7 @@ func (c *Client) RefreshAccessToken(ctx context.Context, refreshToken string) (m
 	values.Set("grant_type", "refresh_token")
 	values.Set("refresh_token", refreshToken)
 
-	return c.request(ctx, http.MethodPost, "/oauth/token", map[string]string{
+	return c.request(ctx, http.MethodPost, "https://api.nvoip.com.br/auth/oauth2/token", map[string]string{
 		"Authorization": "Basic " + basicAuth,
 		"Content-Type":  "application/x-www-form-urlencoded",
 	}, strings.NewReader(values.Encode()))
@@ -135,7 +133,11 @@ func (c *Client) jsonRequest(ctx context.Context, method, path string, payload a
 }
 
 func (c *Client) request(ctx context.Context, method, path string, headers map[string]string, body io.Reader) (map[string]any, error) {
-	req, err := http.NewRequestWithContext(ctx, method, c.BaseURL+path, body)
+	requestURL := path
+	if !strings.HasPrefix(path, "http") {
+		requestURL = c.BaseURL + path
+	}
+	req, err := http.NewRequestWithContext(ctx, method, requestURL, body)
 	if err != nil {
 		return nil, err
 	}

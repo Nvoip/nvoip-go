@@ -8,9 +8,5 @@ import (
 
 func main() {
 	client := exampleutil.NewClientFromEnv()
-	exampleutil.PrintJSON(client.CreateAccessToken(
-		context.Background(),
-		exampleutil.MustEnv("NVOIP_NUMBERSIP"),
-		exampleutil.MustEnv("NVOIP_USER_TOKEN"),
-	))
+	exampleutil.PrintJSON(client.CreateClientCredentialsToken(context.Background()))
 }
